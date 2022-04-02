@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RectProgressBarView" customModule="RectProgressBar" customModuleProvider="target">
+            <connections>
+                <outlet property="containerView" destination="iN0-l3-epB" id="omI-8t-dJp"/>
+                <outlet property="percentageShowLabel" destination="bHB-IM-Zia" id="9DE-VU-1ug"/>
+                <outlet property="rectProgressView" destination="wic-EQ-tnU" id="KVY-ZC-XPF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="374" height="313"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wic-EQ-tnU">
+                    <rect key="frame" x="0.0" y="44" width="374" height="269"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bHB-IM-Zia">
+                            <rect key="frame" x="167" y="118" width="40.5" height="33.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                    <constraints>
+                        <constraint firstItem="bHB-IM-Zia" firstAttribute="centerY" secondItem="wic-EQ-tnU" secondAttribute="centerY" id="Osn-fm-u4y"/>
+                        <constraint firstItem="bHB-IM-Zia" firstAttribute="centerX" secondItem="wic-EQ-tnU" secondAttribute="centerX" id="X2i-Xy-2vN"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="wic-EQ-tnU" secondAttribute="trailing" id="9io-7f-CmM"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="wic-EQ-tnU" secondAttribute="bottom" id="Wwc-MQ-Jvn"/>
+                <constraint firstItem="wic-EQ-tnU" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="bWc-rQ-6Vq"/>
+                <constraint firstItem="wic-EQ-tnU" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vp5-Qr-r5z"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="108.69565217391305" y="-102.79017857142857"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
