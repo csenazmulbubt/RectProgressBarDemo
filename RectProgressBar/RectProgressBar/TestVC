@@ -1,0 +1,276 @@
+//
+//  TestViewController.swift
+//  NextLevel
+//
+//  Created by Nazmul on 4/11/24.
+//  Copyright © 2024 NextLevel. All rights reserved.
+//
+
+import UIKit
+
+class TestViewController: UIViewController, UITextViewDelegate {
+    
+    @IBOutlet weak var testLabel: UILabel!
+    
+    @IBOutlet weak var termsAndPrivacyTextView: NonInteractiveTextView!
+    
+    @IBOutlet weak var currentSelectedLabel: UILabel!
+    
+    
+    
+
+    /*override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Do any additional setup after loading the view.
+        setupLabel()
+        
+        // Add tap gesture recognizer
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapOnLabel(_:)))
+        testLabel.addGestureRecognizer(tapGesture)
+    }
+    
+    func setupLabel() {
+        let text = "By using this app, you agree to the Terms and Conditions and Privacy Policy."
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // Set style for "Terms and Conditions"
+        let termsRange = (text as NSString).range(of: "Terms and Conditions")
+        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: termsRange)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: termsRange)
+        
+        // Set style for "Privacy Policy"
+        let privacyRange = (text as NSString).range(of: "Privacy Policy")
+        attributedString.addAttribute(.foregroundColor, value: UIColor.blue, range: privacyRange)
+        attributedString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: privacyRange)
+        
+        testLabel.attributedText = attributedString
+    }
+    
+    @objc func handleTapOnLabel(_ gesture: UITapGestureRecognizer) {
+        
+        
+        
+        guard let text = testLabel.attributedText?.string else { return }
+        
+        // Define the text ranges for "Terms and Conditions" and "Privacy Policy"
+        let termsRange = (text as NSString).range(of: "Terms and Conditions")
+        let privacyRange = (text as NSString).range(of: "Privacy Policy")
+        
+        // Get the tapped location and character index
+        let location = gesture.location(in: testLabel)
+        if let tappedCharacterIndex = getTappedCharacterIndex(location: location) {
+            if NSLocationInRange(tappedCharacterIndex, termsRange) {
+                loadTermsAndConditionsView()
+            } else if NSLocationInRange(tappedCharacterIndex, privacyRange) {
+                loadPrivacyPolicyView()
+            }
+        }
+    }
+    
+    func getTappedCharacterIndex(location: CGPoint) -> Int? {
+        guard let attributedText = testLabel.attributedText else { return nil }
+        
+        // Set up text storage and layout manager for multi-line label
+        let textStorage = NSTextStorage(attributedString: attributedText)
+        let layoutManager = NSLayoutManager()
+        let textContainer = NSTextContainer(size: testLabel.bounds.size)
+        textContainer.lineFragmentPadding = 0
+        textContainer.maximumNumberOfLines = testLabel.numberOfLines
+        textContainer.lineBreakMode = testLabel.lineBreakMode
+        
+        layoutManager.addTextContainer(textContainer)
+        textStorage.addLayoutManager(layoutManager)
+        
+        // Adjust the location based on the label's frame
+        let adjustedLocation = CGPoint(x: location.x, y: location.y - testLabel.frame.origin.y)
+        
+        // Get the character index at the tapped location
+        let index = layoutManager.characterIndex(
+            for: adjustedLocation,
+            in: textContainer,
+            fractionOfDistanceBetweenInsertionPoints: nil
+        )
+        
+        // Return nil if index is beyond the text length
+        return index < attributedText.length ? index : nil
+    }
+    
+    func loadTermsAndConditionsView() {
+        // Navigate to Terms and Conditions view
+        print("Navigate to Terms and Conditions")
+    }
+    
+    func loadPrivacyPolicyView() {
+        // Navigate to Privacy Policy view
+        print("Navigate to Privacy Policy")
+    }*/
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        termsAndPrivacyTextView.isEditable = false
+        termsAndPrivacyTextView.isScrollEnabled = false
+        termsAndPrivacyTextView.isScrollEnabled = false
+        termsAndPrivacyTextView.isSelectable = false
+        termsAndPrivacyTextView.isUserInteractionEnabled = true
+        termsAndPrivacyTextView.dataDetectorTypes = [] // Disable automatic data detection
+        termsAndPrivacyTextView.translatesAutoresizingMaskIntoConstraints = false
+        termsAndPrivacyTextView.textContainerInset = .zero
+        termsAndPrivacyTextView.textContainer.lineFragmentPadding = 0
+        termsAndPrivacyTextView.backgroundColor = .clear
+        
+        setupTextView()
+        //setupTextViewConstraints()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        termsAndPrivacyTextView.addGestureRecognizer(tapGesture)
+        
+        termsAndPrivacyTextView.textContainer.lineBreakMode = .byWordWrapping
+    }
+    
+    func setupTextView() {
+        let text = "By using this app, you agree to the Terms and Conditions and Privacy Policy."
+        let attributedString = NSMutableAttributedString(string: text)
+        
+        // Create paragraph style for justified alignment
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .justified
+        paragraphStyle.lineBreakMode = .byWordWrapping
+        paragraphStyle.lineSpacing = 2
+        
+        // Attributes for normal text
+        let normalFont = UIFont.systemFont(ofSize: 20) // Increased font size
+        let normalColor = UIColor.black
+        
+        // Attributes for highlighted text
+        let highlightedFont = UIFont.boldSystemFont(ofSize: 20) // Increased font size
+        let highlightedColor = UIColor.blue
+        
+        // Apply attributes to the entire string
+        attributedString.addAttribute(.font, value: normalFont, range: NSRange(location: 0, length: text.count))
+        attributedString.addAttribute(.foregroundColor, value: normalColor, range: NSRange(location: 0, length: text.count))
+        attributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: text.count))
+        
+        // Highlight "Terms and Conditions"
+        let termsRange = (text as NSString).range(of: "Terms and Conditions")
+        attributedString.addAttributes([
+            .font: highlightedFont,
+            .foregroundColor: highlightedColor
+        ], range: termsRange)
+        
+        // Highlight "Privacy Policy"
+        let privacyRange = (text as NSString).range(of: "Privacy Policy")
+        attributedString.addAttributes([
+            .font: highlightedFont,
+            .foregroundColor: highlightedColor
+        ], range: privacyRange)
+        
+        // Set the attributed text to the text view
+        termsAndPrivacyTextView.attributedText = attributedString
+        termsAndPrivacyTextView.isSelectable = false // Disable default selection
+        termsAndPrivacyTextView.isUserInteractionEnabled = true // Enable interaction
+    }
+    
+    // Handle link taps
+    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        if URL.absoluteString == "terms" {
+            loadTermsAndConditionsView()
+        } else if URL.absoluteString == "privacy" {
+            loadPrivacyPolicyView()
+        }
+        return false
+    }
+    
+    func loadTermsAndConditionsView() {
+        // Navigate to Terms and Conditions view
+        print("Navigate to Terms and Conditions")
+        currentSelectedLabel.text = "Terms and Conditions"
+    }
+    
+    func loadPrivacyPolicyView() {
+        // Navigate to Privacy Policy view
+        print("Navigate to Privacy Policy")
+        currentSelectedLabel.text = "Privacy Policy"
+    }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: termsAndPrivacyTextView)
+        
+        // Determine the character index at the tap location
+        guard let characterIndex = termsAndPrivacyTextView.characterIndex(at: location) else { return }
+        
+        let fullText = termsAndPrivacyTextView.text as NSString
+        
+        // Check if the character index is valid
+        guard characterIndex < fullText.length else { return }
+        
+        // Get the tapped character
+        let tappedCharacter = String(fullText.character(at: characterIndex))
+        
+        // Check if the tapped character is a space or a newline
+        if tappedCharacter.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return // Ignore taps on spaces or newlines
+        }
+        
+        // Define the ranges for the clickable terms
+        let termsRange = fullText.range(of: "Terms and Conditions")
+        let privacyRange = fullText.range(of: "Privacy Policy")
+        
+        // Check if the tapped character index is within either of the defined ranges
+        if NSLocationInRange(characterIndex, termsRange) {
+            loadTermsAndConditionsView()
+        } else if NSLocationInRange(characterIndex, privacyRange) {
+            loadPrivacyPolicyView()
+        }
+    }
+    
+   
+}
+
+private extension UITextView {
+//    func characterIndex(at point: CGPoint) -> Int? {
+//        guard let position = closestPosition(to: point) else { return nil }
+//        return offset(from: beginningOfDocument, to: position)
+//    }
+}
+
+class NonInteractiveTextView: UITextView {
+//    override func addGestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) {
+//        // Prevent the default gesture recognizers for text selection, etc., from being added.
+//        if gestureRecognizer is UILongPressGestureRecognizer || gestureRecognizer is UITapGestureRecognizer {
+//            gestureRecognizer.isEnabled = false
+//        } else {
+//            super.addGestureRecognizer(gestureRecognizer)
+//        }
+//    }
+}
+
+private extension UITextView {
+    func characterIndex(at point: CGPoint) -> Int? {
+        guard let position = closestPosition(to: point) else { return nil }
+        return offset(from: beginningOfDocument, to: position)
+    }
+    
+    func boundingRect(for nsRange: NSRange) -> CGRect? {
+        let layoutManager = self.layoutManager
+        
+        var glyphRange = NSRange()
+        layoutManager.characterRange(forGlyphRange: nsRange, actualGlyphRange: &glyphRange)
+        
+        let boundingRect = layoutManager.boundingRect(forGlyphRange: glyphRange, in: self.textContainer)
+        
+        // Adjust the bounding rectangle to the text view's coordinate space
+        let textContainerOffset = CGPoint(x: textContainerInset.left, y: textContainerInset.top)
+        let rectInTextView = boundingRect.offsetBy(dx: textContainerOffset.x, dy: textContainerOffset.y)
+        
+        return rectInTextView
+    }
+}
+
+private extension String {
+    func nsRange(from range: Range<String.Index>) -> NSRange {
+        let location = range.lowerBound.utf16Offset(in: self)
+        let length = range.upperBound.utf16Offset(in: self) - location
+        return NSRange(location: location, length: length)
+    }
+}
